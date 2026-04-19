@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danny Correa — Desarrollador Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --negro: #0a0a0a;
+    --blanco: #f5f0e8;
+    --dorado: #c9a84c;
+    --dorado-claro: #e8c97a;
+    --gris: #1a1a1a;
+    --gris-texto: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--dorado);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--dorado);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    opacity: 0.6;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 24px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(20px);
+    padding: 16px 60px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--dorado);
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--dorado); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 8px 20px;
+    border-radius: 2px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+  .hero-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 8vw, 100px);
+    font-weight: 900;
+    line-height: 0.95;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+  .hero-nombre span { color: var(--dorado); }
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.8;
+    opacity: 0;
+    color: rgba(245,240,232,0.65);
+    max-width: 500px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+  .hero-btns {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+  .btn-primary {
+    background: var(--dorado);
+    color: var(--negro);
+    padding: 16px 36px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--dorado-claro); transform: translateY(-2px); }
+  .btn-secondary {
+    border: 1px solid rgba(245,240,232,0.3);
+    color: var(--blanco);
+    padding: 16px 36px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover { border-color: var(--dorado); color: var(--dorado); transform: translateY(-2px); }
+
+  .hero-foto {
+    position: absolute; right: 60px; bottom: 0;
+    width: 380px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1s;
+  }
+  .hero-foto img {
+    width: 100%;
+    filter: grayscale(20%);
+    mask-image: linear-gradient(to top, transparent 0%, black 30%);
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%);
+  }
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 60px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gris-texto);
+    opacity: 0; animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+  .hero-scroll::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--dorado);
+  }
+
+  /* SOBRE MI */
+  #sobre {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .seccion-tag {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .seccion-tag::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: rgba(201,168,76,0.3);
+    max-width: 60px;
+  }
+  .seccion-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+  .sobre-texto {
+    color: rgba(245,240,232,0.65);
+    line-height: 1.9;
+    font-size: 15px;
+    margin-bottom: 40px;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .skill-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: rgba(245,240,232,0.7);
+  }
+  .skill-item::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--dorado);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .sobre-stats {
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .stat-item {
+    border-left: 2px solid var(--dorado);
+    padding-left: 24px;
+  }
+  .stat-numero {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--dorado);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--gris-texto);
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  /* PROYECTOS */
+  #proyectos {
+    padding: 120px 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .proyectos-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 70px;
+  }
+  .proyectos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+  }
+  .proyecto-card {
+    background: var(--gris);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .proyecto-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-8px);
+  }
+  .proyecto-img {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .proyecto-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: brightness(0.7);
+  }
+  .proyecto-card:hover .proyecto-img img { transform: scale(1.08); }
+  .proyecto-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 60%);
+  }
+  .proyecto-numero {
+    position: absolute; top: 20px; right: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: rgba(201,168,76,0.2);
+    line-height: 1;
+  }
+  .proyecto-body { padding: 28px; }
+  .proyecto-tag {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 10px;
+  }
+  .proyecto-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .proyecto-desc {
+    font-size: 13px;
+    color: var(--gris-texto);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .proyecto-link {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    text-decoration: none;
+    transition: gap 0.3s;
+  }
+  .proyecto-card:hover .proyecto-link { gap: 14px; }
+
+  /* TECH STACK */
+  .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .tech-tag {
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 2px;
+    color: var(--gris-texto);
+  }
+
+  /* CONTACTO */
+  #contacto {
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contacto-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%);
+  }
+  .contacto-content { position: relative; z-index: 2; }
+  .contacto-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 32px;
+  }
+  .contacto-titulo span { color: var(--dorado); }
+  .contacto-desc {
+    color: rgba(245,240,232,0.55);
+    font-size: 16px;
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+  }
+  .contacto-btns { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .contacto-info {
+    display: flex; justify-content: center; gap: 48px;
+    margin-top: 64px; flex-wrap: wrap;
+  }
+  .contacto-item {
+    display: flex; flex-direction: column; gap: 6px;
+    align-items: center;
+  }
+  .contacto-item a {
+    color: rgba(245,240,232,0.65);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  .contacto-item a:hover { color: var(--dorado); }
+  .contacto-item-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dorado);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 32px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-copy { font-size: 12px; color: var(--gris-texto); }
+  .footer-redes { display: flex; gap: 20px; }
+  .footer-redes a {
+    color: var(--gris-texto);
+    font-size: 16px;
+    transition: color 0.3s;
+    text-decoration: none;
+  }
+  .footer-redes a:hover { color: var(--dorado); }
+
+  /* WHATSAPP */
+  .whatsapp-btn {
+    position: fixed; bottom: 32px; right: 32px;
+    background: #25D366;
+    color: white;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    z-index: 99;
+    transition: transform 0.3s;
+  }
+  .whatsapp-btn:hover { transform: scale(1.1); }
+
+  /* REVEAL ANIMATION */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    #hero { padding: 0 24px; }
+    .hero-foto { display: none; }
+    #sobre { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    #proyectos { padding: 80px 24px; }
+    .proyectos-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    #contacto { padding: 80px 24px; }
+    footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">DC</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Desarrollador Web · Quito, Ecuador</div>
+    <h1 class="hero-nombre">
+      Danny<br><span>Correa</span>
+    </h1>
+    <p class="hero-desc">
+      Estudiante de Desarrollo de Software apasionado por crear experiencias web modernas, funcionales y visualmente impactantes usando HTML, CSS, JavaScript e IA.
+    </p>
+    <div class="hero-btns">
+      <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+      <a href="#contacto" class="btn-secondary">Contáctame</a>
+    </div>
+  </div>
+  <div class="hero-foto">
+    <img src="foto.jpg" alt="Danny Correa" onerror="this.parentElement.style.display='none'">
+  </div>
+  <div class="hero-scroll">Scroll para explorar</div>
+</section>
+
+<!-- SOBRE MI -->
+<section id="sobre">
+  <div class="reveal">
+    <div class="seccion-tag">Sobre mí</div>
+    <h2 class="seccion-titulo">Código con propósito y diseño</h2>
+    <p class="sobre-texto">
+      Soy Danny Correa, estudiante de 4to semestre de Desarrollo de Software en el Instituto Superior Universitario Sucre, Quito. Me especializo en crear sitios web modernos y funcionales para negocios reales, combinando diseño atractivo con tecnología actual incluyendo herramientas de IA.
+    </p>
+    <div class="skills-grid">
+      <div class="skill-item">HTML5 & CSS3</div>
+      <div class="skill-item">JavaScript</div>
+      <div class="skill-item">Diseño Responsive</div>
+      <div class="skill-item">GitHub & Git</div>
+      <div class="skill-item">Bootstrap</div>
+      <div class="skill-item">Herramientas IA</div>
+      <div class="skill-item">Animaciones CSS/JS</div>
+      <div class="skill-item">UI/UX básico</div>
+    </div>
+  </div>
+  <div class="sobre-stats reveal">
+    <div class="stat-item">
+      <div class="stat-numero">3+</div>
+      <div class="stat-label">Proyectos completados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-numero">4to</div>
+      <div class="stat-label">Semestre — Desarrollo de Software</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-numero">100%</div>
+      <div class="stat-label">Remoto — disponible ahora</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="proyectos-header reveal">
+    <div>
+      <div class="seccion-tag">Portafolio</div>
+      <h2 class="seccion-titulo">Proyectos destacados</h2>
+    </div>
+    <a href="https://github.com/correaprimero78" target="_blank" class="btn-secondary" style="white-space:nowrap">Ver GitHub →</a>
+  </div>
+  <div class="proyectos-grid">
+
+    <a href="https://correaprimero78.github.io/brasa-noble" target="_blank" class="proyecto-card reveal">
+      <div class="proyecto-img">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="Brasa Noble">
+        <div class="proyecto-overlay"></div>
+        <div class="proyecto-numero">01</div>
+      </div>
+      <div class="proyecto-body">
+        <div class="proyecto-tag">Restaurante · Landing Page</div>
+        <div class="proyecto-nombre">Brasa Noble</div>
+        <p class="proyecto-desc">Steakhouse & Grill con diseño oscuro y elegante. Menú interactivo, galería, reservas por WhatsApp y mapa integrado.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">HTML</span>
+          <span class="tech-tag">CSS</span>
+          <span class="tech-tag">JavaScript</span>
+        </div>
+        <div class="proyecto-link">Ver proyecto <i class="fas fa-arrow-right"></i></div>
+      </div>
+    </a>
+
+    <a href="https://correaprimero78.github.io/-Psicolog-a-cl-nica" target="_blank" class="proyecto-card reveal">
+      <div class="proyecto-img">
+        <img src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=600&q=80" alt="Psicología">
+        <div class="proyecto-overlay"></div>
+        <div class="proyecto-numero">02</div>
+      </div>
+      <div class="proyecto-body">
+        <div class="proyecto-tag">Salud · Sitio Profesional</div>
+        <div class="proyecto-nombre">Psicología Clínica</div>
+        <p class="proyecto-desc">Sitio para psicóloga con diseño cálido y minimalista. Servicios, testimonios, FAQ interactivo y agenda por WhatsApp.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">HTML</span>
+          <span class="tech-tag">CSS</span>
+          <span class="tech-tag">JavaScript</span>
+        </div>
+        <div class="proyecto-link">Ver proyecto <i class="fas fa-arrow-right"></i></div>
+      </div>
+    </a>
+
+    <a href="https://correaprimero78.github.io/gimnasio" target="_blank" class="proyecto-card reveal">
+      <div class="proyecto-img">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Gimnasio">
+        <div class="proyecto-overlay"></div>
+        <div class="proyecto-numero">03</div>
+      </div>
+      <div class="proyecto-body">
+        <div class="proyecto-tag">Fitness · Landing Page</div>
+        <div class="proyecto-nombre">Elite Gym</div>
+        <p class="proyecto-desc">Sitio para entrenador personal con diseño oscuro y energético. Planes, transformaciones, contadores animados y reservas.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">HTML</span>
+          <span class="tech-tag">CSS</span>
+          <span class="tech-tag">JavaScript</span>
+        </div>
+        <div class="proyecto-link">Ver proyecto <i class="fas fa-arrow-right"></i></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contacto-bg"></div>
+  <div class="contacto-content reveal">
+    <div class="seccion-tag" style="justify-content:center">Contacto</div>
+    <h2 class="contacto-titulo">¿Tienes un<br>proyecto? <span>Hablemos.</span></h2>
+    <p class="contacto-desc">Estoy disponible para proyectos freelance y trabajo remoto. Respondo rápido.</p>
+    <div class="contacto-btns">
+      <a href="https://wa.me/593990917920?text=Hola%20Danny,%20vi%20tu%20portafolio%20y%20me%20interesa%20tu%20trabajo" target="_blank" class="btn-primary">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+      <a href="mailto:correadanny550@gmail.com" class="btn-secondary">
+        <i class="fas fa-envelope"></i> Email
+      </a>
+    </div>
+    <div class="contacto-info">
+      <div class="contacto-item">
+        <span class="contacto-item-label">Email</span>
+        <a href="mailto:correadanny550@gmail.com">correadanny550@gmail.com</a>
+      </div>
+      <div class="contacto-item">
+        <span class="contacto-item-label">GitHub</span>
+        <a href="https://github.com/correaprimero78" target="_blank">correaprimero78</a>
+      </div>
+      <div class="contacto-item">
+        <span class="contacto-item-label">Ubicación</span>
+        <a>Quito, Ecuador · Remoto</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 Danny Correa — Desarrollador Web</div>
+  <div class="footer-redes">
+    <a href="https://github.com/correaprimero78" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="mailto:correadanny550@gmail.com"><i class="fas fa-envelope"></i></a>
+    <a href="https://wa.me/593990917920" target="_blank"><i class="fab fa-whatsapp"></i></a>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/593990917920?text=Hola%20Danny,%20vi%20tu%20portafolio" target="_blank" class="whatsapp-btn">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+  // Cursor personalizado
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 5 + 'px';
+    cursor.style.top = e.clientY - 5 + 'px';
+    ring.style.left = e.clientX - 18 + 'px';
+    ring.style.top = e.clientY - 18 + 'px';
+  });
+
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
