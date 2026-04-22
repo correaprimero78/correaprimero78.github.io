@@ -33,38 +33,17 @@
   .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 60%); }
   .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px); background-size: 60px 60px; }
   .hero-content { position: relative; z-index: 2; max-width: 55%; }
-
   .hero-tag { display: inline-block; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--dorado); border: 1px solid rgba(201,168,76,0.3); padding: 8px 20px; border-radius: 2px; margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s; }
   .hero-nombre { font-family: 'Playfair Display', serif; font-size: clamp(48px, 6vw, 90px); font-weight: 900; line-height: 0.95; margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s; }
   .hero-nombre span { color: var(--dorado); }
   .hero-desc { font-size: 16px; line-height: 1.8; opacity: 0; color: rgba(245,240,232,0.65); max-width: 460px; margin-bottom: 48px; animation: fadeUp 0.8s ease forwards 0.6s; }
   .hero-btns { display: flex; gap: 20px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s; }
-
   .btn-primary { background: var(--dorado); color: var(--negro); padding: 16px 36px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; font-weight: 500; border-radius: 2px; transition: all 0.3s; }
   .btn-primary:hover { background: var(--dorado-claro); transform: translateY(-2px); }
   .btn-secondary { border: 1px solid rgba(245,240,232,0.3); color: var(--blanco); padding: 16px 36px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: all 0.3s; }
   .btn-secondary:hover { border-color: var(--dorado); color: var(--dorado); transform: translateY(-2px); }
-
-  .hero-foto {
-    position: absolute;
-    right: 60px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 320px;
-    opacity: 0;
-    animation: fadeIn 1s ease forwards 1s;
-  }
-  .hero-foto img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    object-position: center top;
-    border-radius: 4px;
-    filter: grayscale(10%);
-    border: 1px solid rgba(201,168,76,0.25);
-    box-shadow: 0 0 60px rgba(201,168,76,0.08);
-  }
-
+  .hero-foto { position: absolute; right: 60px; top: 50%; transform: translateY(-50%); width: 320px; opacity: 0; animation: fadeIn 1s ease forwards 1s; }
+  .hero-foto img { width: 100%; height: 400px; object-fit: cover; object-position: center top; border-radius: 4px; filter: grayscale(10%); border: 1px solid rgba(201,168,76,0.25); box-shadow: 0 0 60px rgba(201,168,76,0.08); }
   .hero-scroll { position: absolute; bottom: 40px; left: 60px; display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gris-texto); opacity: 0; animation: fadeUp 0.8s ease forwards 1.2s; }
   .hero-scroll::before { content: ''; width: 40px; height: 1px; background: var(--dorado); }
 
@@ -80,6 +59,110 @@
   .stat-item { border-left: 2px solid var(--dorado); padding-left: 24px; }
   .stat-numero { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; color: var(--dorado); line-height: 1; }
   .stat-label { font-size: 13px; color: var(--gris-texto); letter-spacing: 1px; margin-top: 6px; }
+
+  /* ===================== NUEVA SECCIÓN TECNOLOGÍAS ===================== */
+  #tecnologias {
+    padding: 120px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .tec-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .tec-header .seccion-tag {
+    justify-content: center;
+  }
+  .tec-header .seccion-tag::after { display: none; }
+
+  .tec-categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+  }
+
+  .tec-categoria {
+    background: var(--gris);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 4px;
+    padding: 36px 32px;
+    transition: border-color 0.4s;
+  }
+  .tec-categoria:hover { border-color: rgba(201,168,76,0.35); }
+
+  .tec-cat-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .tec-cat-icon {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--dorado);
+    flex-shrink: 0;
+  }
+  .tec-cat-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--blanco);
+  }
+  .tec-cat-sub {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gris-texto);
+    margin-top: 2px;
+  }
+
+  .tec-skills { display: flex; flex-direction: column; gap: 18px; }
+
+  .tec-skill-row { display: flex; flex-direction: column; gap: 7px; }
+  .tec-skill-info { display: flex; justify-content: space-between; align-items: center; }
+  .tec-skill-nombre { font-size: 13px; color: rgba(245,240,232,0.8); letter-spacing: 0.5px; }
+  .tec-skill-pct { font-size: 12px; color: var(--dorado); font-weight: 500; }
+
+  .tec-bar-bg {
+    height: 3px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .tec-bar-fill {
+    height: 100%;
+    background: var(--dorado);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tec-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .tec-badge {
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 2px;
+    color: rgba(245,240,232,0.6);
+    transition: all 0.3s;
+  }
+  .tec-badge:hover {
+    border-color: var(--dorado);
+    color: var(--dorado);
+  }
+  /* ===================== FIN SECCIÓN TECNOLOGÍAS ===================== */
 
   #proyectos { padding: 120px 60px; max-width: 1300px; margin: 0 auto; }
   .proyectos-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 70px; }
@@ -136,6 +219,7 @@
     .hero-content { max-width: 100%; }
     .hero-foto { display: none; }
     #sobre { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    #tecnologias { padding: 80px 24px; }
     #proyectos { padding: 80px 24px; }
     .proyectos-header { flex-direction: column; align-items: flex-start; gap: 16px; }
     #contacto { padding: 80px 24px; }
@@ -152,6 +236,7 @@
   <a href="#" class="nav-logo">DC</a>
   <ul class="nav-links">
     <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#tecnologias">Tecnologías</a></li>
     <li><a href="#proyectos">Proyectos</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
@@ -163,7 +248,7 @@
   <div class="hero-content">
     <div class="hero-tag">Desarrollador Web · Quito, Ecuador</div>
     <h1 class="hero-nombre">Danny Israel<br><span>Correa Vizuete</span></h1>
-    <p class="hero-desc">Desarrollador de Software apasionado por crear experiencias web modernas, funcionales y visualmente impactantes. Cuento con sólida formación técnica y dominio de tecnologías como HTML, CSS, JavaScript, entre otras herramientas.</p>
+    <p class="hero-desc">Desarrollador de Software apasionado por crear experiencias web modernas, funcionales y visualmente impactantes. Cuento con sólida formación técnica y dominio de tecnologías como HTML, CSS, JavaScript, WordPress y más.</p>
     <div class="hero-btns">
       <a href="#proyectos" class="btn-primary">Ver proyectos</a>
       <a href="#contacto" class="btn-secondary">Contáctame</a>
@@ -186,7 +271,7 @@
       <div class="skill-item">Diseño Responsive</div>
       <div class="skill-item">GitHub & Git</div>
       <div class="skill-item">Bootstrap</div>
-      <div class="skill-item">Herramientas IA</div>
+      <div class="skill-item">WordPress</div>
       <div class="skill-item">Animaciones CSS/JS</div>
       <div class="skill-item">UI/UX básico</div>
     </div>
@@ -206,6 +291,160 @@
     </div>
   </div>
 </section>
+
+<!-- ===================== NUEVA SECCIÓN TECNOLOGÍAS ===================== -->
+<section id="tecnologias">
+  <div class="tec-header reveal">
+    <div class="seccion-tag">Stack técnico</div>
+    <h2 class="seccion-titulo">Tecnologías que domino</h2>
+  </div>
+
+  <div class="tec-categorias">
+
+    <!-- HTML CSS JS -->
+    <div class="tec-categoria reveal">
+      <div class="tec-cat-header">
+        <div class="tec-cat-icon"><i class="fab fa-html5"></i></div>
+        <div>
+          <div class="tec-cat-titulo">Frontend</div>
+          <div class="tec-cat-sub">HTML · CSS · JavaScript</div>
+        </div>
+      </div>
+      <div class="tec-skills">
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">HTML5</span>
+            <span class="tec-skill-pct">90%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="90"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">CSS3 & Animaciones</span>
+            <span class="tec-skill-pct">85%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="85"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">JavaScript</span>
+            <span class="tec-skill-pct">75%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="75"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">Responsive Design</span>
+            <span class="tec-skill-pct">90%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="90"></div></div>
+        </div>
+      </div>
+      <div class="tec-badges" style="margin-top:24px;">
+        <span class="tec-badge">Bootstrap</span>
+        <span class="tec-badge">Flexbox</span>
+        <span class="tec-badge">CSS Grid</span>
+        <span class="tec-badge">DOM</span>
+      </div>
+    </div>
+
+    <!-- WordPress -->
+    <div class="tec-categoria reveal">
+      <div class="tec-cat-header">
+        <div class="tec-cat-icon"><i class="fab fa-wordpress"></i></div>
+        <div>
+          <div class="tec-cat-titulo">WordPress</div>
+          <div class="tec-cat-sub">CMS · Elementor · Temas</div>
+        </div>
+      </div>
+      <div class="tec-skills">
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">WordPress CMS</span>
+            <span class="tec-skill-pct">80%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="80"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">Elementor</span>
+            <span class="tec-skill-pct">75%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="75"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">Temas & Personalización</span>
+            <span class="tec-skill-pct">70%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="70"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">Plugins & WooCommerce</span>
+            <span class="tec-skill-pct">65%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="65"></div></div>
+        </div>
+      </div>
+      <div class="tec-badges" style="margin-top:24px;">
+        <span class="tec-badge">Astra Theme</span>
+        <span class="tec-badge">One Page</span>
+        <span class="tec-badge">SEO básico</span>
+        <span class="tec-badge">Formularios</span>
+      </div>
+    </div>
+
+    <!-- Herramientas -->
+    <div class="tec-categoria reveal">
+      <div class="tec-cat-header">
+        <div class="tec-cat-icon"><i class="fas fa-tools"></i></div>
+        <div>
+          <div class="tec-cat-titulo">Herramientas</div>
+          <div class="tec-cat-sub">Git · IA · Diseño</div>
+        </div>
+      </div>
+      <div class="tec-skills">
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">Git & GitHub</span>
+            <span class="tec-skill-pct">80%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="80"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">Herramientas IA</span>
+            <span class="tec-skill-pct">85%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="85"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">UI/UX básico</span>
+            <span class="tec-skill-pct">70%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="70"></div></div>
+        </div>
+        <div class="tec-skill-row">
+          <div class="tec-skill-info">
+            <span class="tec-skill-nombre">VS Code</span>
+            <span class="tec-skill-pct">85%</span>
+          </div>
+          <div class="tec-bar-bg"><div class="tec-bar-fill" data-width="85"></div></div>
+        </div>
+      </div>
+      <div class="tec-badges" style="margin-top:24px;">
+        <span class="tec-badge">GitHub Pages</span>
+        <span class="tec-badge">Figma básico</span>
+        <span class="tec-badge">ChatGPT</span>
+        <span class="tec-badge">Claude AI</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ===================== FIN SECCIÓN TECNOLOGÍAS ===================== -->
 
 <section id="proyectos">
   <div class="proyectos-header reveal">
@@ -316,12 +555,22 @@
     ring.style.left = e.clientX - 18 + 'px';
     ring.style.top = e.clientY - 18 + 'px';
   });
+
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
   });
+
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        e.target.querySelectorAll('.tec-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
   }, { threshold: 0.15 });
+
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
